@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:backgroundTint="#F4E983">
+
+    <TextView
+        android:id="@+id/txt_Titulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Pedido:"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_FechaEntrega"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="28dp"
+        android:text="TextView"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_Titulo"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_GuionC"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="27dp"
+        android:text="-"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/txt_Titulo"
+        app:layout_constraintTop_toBottomOf="@+id/txt_Titulo" />
+
+    <TextView
+        android:id="@+id/txt_CantCalabaza"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="X"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_GuionC"
+        app:layout_constraintStart_toEndOf="@+id/txt_GuionC" />
+
+    <TextView
+        android:id="@+id/txt_docDeCalabaza"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="doc. de Calabaza"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_CantCalabaza"
+        app:layout_constraintStart_toEndOf="@+id/txt_CantCalabaza" />
+
+    <TextView
+        android:id="@+id/txt_GuionA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="19dp"
+        android:text="-"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/txt_GuionC"
+        app:layout_constraintTop_toBottomOf="@+id/txt_GuionC" />
+
+    <TextView
+        android:id="@+id/txt_CantAcelga"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="X"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_GuionA"
+        app:layout_constraintStart_toEndOf="@+id/txt_GuionA" />
+
+    <TextView
+        android:id="@+id/txt_DocDeAcelga"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="doc. de Acelga"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_CantAcelga"
+        app:layout_constraintStart_toEndOf="@+id/txt_CantAcelga" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="------------------------------------------------"
+        app:layout_constraintStart_toStartOf="@+id/txt_GuionA"
+        app:layout_constraintTop_toBottomOf="@+id/txt_DocDeAcelga" />
+
+    <TextView
+        android:id="@+id/txt_TotalText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11dp"
+        android:text=" Total: $"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/textView10"
+        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+    <TextView
+        android:id="@+id/txt_Total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="X"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_TotalText"
+        app:layout_constraintStart_toEndOf="@+id/txt_TotalText" />
+
+    <TextView
+        android:id="@+id/txt_Entregado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="21dp"
+        android:text="Entregado________________"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/txt_TotalText"
+        app:layout_constraintTop_toBottomOf="@+id/txt_TotalText" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Pagado___________________"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/txt_Entregado"
+        app:layout_constraintTop_toBottomOf="@+id/txt_Entregado" />
+
+    <CheckBox
+        android:id="@+id/chkbx_Entregado"
+        android:layout_width="31dp"
+        android:layout_height="31dp"
+        android:layout_marginEnd="28dp"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_Entregado"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <CheckBox
+        android:id="@+id/chkbx_Pagado"
+        android:layout_width="31dp"
+        android:layout_height="33dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView14"
+        app:layout_constraintEnd_toEndOf="@+id/chkbx_Entregado" />
+
+    <TextView
+        android:id="@+id/txt_regiterText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="30dp"
+        android:text="Registrado por"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+    <TextView
+        android:id="@+id/txt_registerDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="El día "
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/txt_regiterText"
+        app:layout_constraintTop_toBottomOf="@+id/txt_regiterText" />
+
+    <TextView
+        android:id="@+id/txt_Register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="11dp"
+        android:text="X"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_regiterText"
+        app:layout_constraintStart_toEndOf="@+id/txt_regiterText" />
+
+    <TextView
+        android:id="@+id/txt_fechaRegistro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="11dp"
+        android:layout_marginBottom="1dp"
+        android:text="X"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_registerDate"
+        app:layout_constraintStart_toEndOf="@+id/txt_registerDate" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
