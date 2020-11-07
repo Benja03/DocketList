@@ -1,9 +1,17 @@
 package com.example.docketlist;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -18,18 +26,23 @@ public class MainActivity extends AppCompatActivity {
 
     private ListView lvPedidos;
     private PedidoAdapter adaptador;
-    //private SwipeRefreshLayout swipeRefreshLayout;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private List<Pedido> listaPedidos;
+    private Context ctx;
+    private DbHelper dbHelper;
+    private SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        this.ctx = getApplicationContext();
+
         lvPedidos = findViewById(R.id.lvPedidos);
 
         listaPedidos = new ArrayList<>();
-        this.cargarDatos(listaPedidos);
+        cargarDatosSqlite();
 
         adaptador = new PedidoAdapter(listaPedidos);
         lvPedidos.setAdapter(adaptador);
@@ -42,16 +55,106 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /*
+
         swipeRefreshLayout = findViewById(R.id.swiperefresh);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onRefresh() {
-                cargarDatos(listaPedidos);
+            public void onRefresh(){
+                adaptador.notifyDataSetChanged();
+                cargarDatosSqlite();
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
-        */
+
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        adaptador.notifyDataSetChanged();
+        cargarDatosSqlite();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_opciones_mainactivity,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_pedido_agregar:
+                Intent i = new Intent(MainActivity.this, Abm_Pedido.class);
+                i.putExtra("ID_PEDIDO", 0);
+                startActivity(i);
+                return true;
+            case R.id.action_pedido_actualizar:
+                adaptador.notifyDataSetChanged();
+                cargarDatosSqlite();
+                Toast.makeText(ctx, "actualizado", Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
+
+    /*
+    *  Funciones Propias
+    */
+
+    private void cargarDatosSqlite(){
+        // obtenemos datos de SQLite
+        //abrimos db en modo lectura
+        dbHelper = new DbHelper(this.ctx);
+        db = dbHelper.getReadableDatabase();
+
+        // limpiamos lista
+        listaPedidos.clear();
+
+        //seleccionamos todos los registros
+        Cursor cursor = db.rawQuery("SELECT * FROM Pedido",null);
+
+        //nos posicionamos al inicio del curso
+        if(cursor.moveToFirst()) {
+
+            //iteramos todos los registros del cursor y llenamos array con registros
+            while (!cursor.isAfterLast()) {
+
+                Pedido item = new Pedido();
+                item.setId(cursor.getInt(cursor.getColumnIndex("idPedido")));
+                item.setNombre(cursor.getString(cursor.getColumnIndex("nombre")));
+                item.setFecha_registro(cursor.getString(cursor.getColumnIndex("fechaRegistro")));
+                item.setFecha_entrega(cursor.getString(cursor.getColumnIndex("fechaEntrega")));
+                item.setCantA(cursor.getFloat(cursor.getColumnIndex("cantA")));
+                item.setCantC(cursor.getFloat(cursor.getColumnIndex("cantC")));
+                item.setTotal(cursor.getFloat(cursor.getColumnIndex("total")));
+                item.setRecorder(cursor.getString(cursor.getColumnIndex("recorder")));
+                item.setEntregado(cursor.getInt(cursor.getColumnIndex("entregado")));
+                item.setPagado(cursor.getInt(cursor.getColumnIndex("pagado")));
+
+                listaPedidos.add(item);
+
+                cursor.moveToNext(); // corremos a siguiente posición del curso
+            }
+        }
+        else{
+            Toast.makeText(ctx, "No hay registros", Toast.LENGTH_SHORT).show();
+        }
+
+        // cerramos conexion SQLite
+        db.close();
+    }
+
+    private void cargarDetallePedido(int position){
+
+        int ID = (int) adaptador.getItemId(position);
+
+        Intent intent = new Intent(MainActivity.this, ActivityDetallePedido.class);
+        intent.putExtra("ID_PEDIDO", ID);
+        startActivity(intent);
     }
 
     private void cargarDatos(List<Pedido> listaPedidos){
@@ -65,24 +168,5 @@ public class MainActivity extends AppCompatActivity {
         listaPedidos.add(new Pedido(8, "Rocio",2.5F, 2F, "Alma", "12/09"));
         listaPedidos.add(new Pedido(9, "Valeria",1F, 2F, "Benjamin", "12/09"));
         listaPedidos.add(new Pedido(10, "Julio",1F, 2F, "Alma", "12/09"));
-    }
-
-    private void cargarDetallePedido(int position){
-        Pedido pedido = (Pedido) adaptador.getItem(position);
-
-        Intent intent = new Intent(MainActivity.this, ActivityDetallePedido.class);
-
-        intent.putExtra("E_ID", pedido.getId());
-        intent.putExtra("E_NOMBRE", pedido.getNombre());
-        intent.putExtra("E_FECHAENTREGA", pedido.getFecha_entrega());
-        intent.putExtra("E_CANTC", pedido.getCantC());
-        intent.putExtra("E_CANTA", pedido.getCantA());
-        intent.putExtra("E_TOTAL", pedido.getTotal());
-        intent.putExtra("E_RECORDER", pedido.getRecorder());
-        intent.putExtra("E_FECHAREGISTRO", pedido.getFecha_registro());
-        intent.putExtra("E_ENTREGADO", pedido.getEntregado());
-        intent.putExtra("E_PAGADO", pedido.getPagado());
-
-        startActivity(intent);
     }
 }

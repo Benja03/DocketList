@@ -12,10 +12,12 @@ public class Pedido {
     private Float cantA;
     private Float total; //la suma a cobrar
     private String recorder; //quien registra el pedido
-    private Boolean entregado; //si se entregó o no el pedido
-    private Boolean pagado; //si se pagó o no el pedido
+    private int entregado; //si se entregó o no el pedido
+    private int pagado; //si se pagó o no el pedido
 
     // Constructor
+    public  Pedido(){}
+
     public Pedido(int id, String nombre, Float cantC, Float cantA, String recorder, String fecha_entrega) {
         this.id = id;
         this.nombre = nombre;
@@ -25,8 +27,8 @@ public class Pedido {
         this.recorder = recorder;
         this.fecha_entrega = fecha_entrega;
         this.fecha_registro = DateFormat.getDateTimeInstance().format(new Date());
-        this.entregado = false;
-        this.pagado = false;
+        this.entregado = 0;
+        this.pagado = 0;
     }
 
     /*
@@ -88,17 +90,17 @@ public class Pedido {
         this.recorder = recorder;
     }
 
-    public Boolean getEntregado() {
+    public int getEntregado() {
         return entregado;
     }
-    public void setEntregado(Boolean entregado) {
+    public void setEntregado(int entregado) {
         this.entregado = entregado;
     }
 
-    public Boolean getPagado() {
+    public int getPagado() {
         return pagado;
     }
-    public void setPagado(Boolean pagado) {
+    public void setPagado(int pagado) {
         this.pagado = pagado;
     }
 
